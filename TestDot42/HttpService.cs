@@ -163,25 +163,41 @@ namespace TestDot42
 									<html>
 										<head>
 											<meta charset='utf-8'>
-											<title>Переключатель треков для AiSatanDevice</title>
+											<title>AiSatanDevice Admin Panel</title>
 										</head>
-									" + style + @"
 										<body>
+											<script src='//code.jquery.com/jquery-2.1.0.min.js'></script>
+											<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+											<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
 											<div class='container'>
-													<h1>AiSatanDevice Admin Panel: </h1>
-													<p>BatteryStatus: " + receiver.bStatus + @"</p>
-													<a href='/?p" + tmp + @"' class='button button-gray'>Previous</a>
-													<a href='/?s" + tmp + @"' class='button button-red'>Play/Pause</a>
-													<a href='/?n" + tmp + @"' class='button button-green'>Next</a>
-													<p>Input: </p>
-													<br/>
-													<p> " + header + @"</p>
+													<h1 class='text-center'>AiSatanDevice Admin Panel: </h1>
+													<div class='progress'>
+													  <div id='batteryStats' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + receiver.bStatus + @"' aria-valuemin='0' aria-valuemax='100' style='width: 40%'>
+														<span class='sr-only'>Battery: " + receiver.bStatus + @"%</span>
+													  </div>
+													</div>
+													<div class='text-center'>
+														<div class='btn-group'>
+															<a href='/?p45388' class='btn btn-warning'>Previous</a>
+															<a href='/?s45388' class='btn btn-success'>Play/Pause</a>
+															<a href='/?n45388' class='btn btn-primary'>Next</a>
+														</div>
+													</div>
 											</div>
-<div class='container'>
-										<img src='" + imgs + @"'>
-</div>
 										</body>
+										<script>
+$( document ).ready(function() {
+	if(" + receiver.bStatus + @" < 50)
+	{
+		$('#batteryStats').addClass('progress-bar-warning').removeClass('progress-bar-success');
+	}
+	if(" + receiver.bStatus + @" < 20)
+	{
+		$('#batteryStats').addClass('progress-bar-danger').removeClass('progress-bar-warning');
+	}
+});
 									" + tScript + @"
+									</script>
 									</html>
 									");
 						output.Flush();
@@ -241,119 +257,6 @@ namespace TestDot42
 			}
 			return "?";
 		}
-
-		private string style = @"<style>
-
-		@import url(http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css);
-
-		body {
-		  font: 13px/20px 'Lucida Grande', Verdana, sans-serif;
-		  color: #404040;
-		  background: white;
-		}
-
-		.button {
-		  position: relative;
-		  display: inline-block;
-		  vertical-align: top;
-		  height: 36px;
-		  line-height: 35px;
-		  padding: 0 20px;
-		  font-size: 13px;
-		  color: white;
-		  text-align: center;
-		  text-decoration: none;
-		  text-shadow: 0 -1px rgba(0, 0, 0, 0.4);
-		  background-clip: padding-box;
-		  border: 1px solid;
-		  border-radius: 2px;
-		  cursor: pointer;
-		  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25);
-		  box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25);
-		}
-
-		.button:before {
-		  content: '';
-		  position: absolute;
-		  top: 0;
-		  bottom: 0;
-		  left: 0;
-		  right: 0;
-		  pointer-events: none;
-		  background-image: -webkit-radial-gradient(center top, farthest-corner, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-		  background-image: -moz-radial-gradient(center top, farthest-corner, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-		  background-image: -o-radial-gradient(center top, farthest-corner, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-		  background-image: radial-gradient(center top, farthest-corner, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-		}
-
-		.button:hover:before {
-		  background-image: -webkit-radial-gradient(farthest-corner, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
-		  background-image: -moz-radial-gradient(farthest-corner, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
-		  background-image: -o-radial-gradient(farthest-corner, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
-		  background-image: radial-gradient(farthest-corner, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
-		}
-
-		.button:active {
-		  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-		  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-		}
-
-		.button:active:before {
-		  content: none;
-		}
-
-		.button-green {
-		  background: #5ca934;
-		  border-color: #478228 #478228 #3c6f22;
-		  background-image: -webkit-linear-gradient(top, #69c03b, #5ca934 66%, #54992f);
-		  background-image: -moz-linear-gradient(top, #69c03b, #5ca934 66%, #54992f);
-		  background-image: -o-linear-gradient(top, #69c03b, #5ca934 66%, #54992f);
-		  background-image: linear-gradient(to bottom, #69c03b, #5ca934 66%, #54992f);
-		}
-
-		.button-green:active {
-		  background: #5ca934;
-		  border-color: #3c6f22 #478228 #478228;
-		}
-
-		.button-red {
-		  background: #d5452f;
-		  border-color: #ae3623 #ae3623 #992f1f;
-		  background-image: -webkit-linear-gradient(top, #da5c48, #d5452f 66%, #c73d28);
-		  background-image: -moz-linear-gradient(top, #da5c48, #d5452f 66%, #c73d28);
-		  background-image: -o-linear-gradient(top, #da5c48, #d5452f 66%, #c73d28);
-		  background-image: linear-gradient(to bottom, #da5c48, #d5452f 66%, #c73d28);
-		}
-
-		.button-red:active {
-		  background: #d5452f;
-		  border-color: #992f1f #ae3623 #ae3623;
-		}
-
-		.button-gray {
-		  background: #47494f;
-		  border-color: #2f3034 #2f3034 #232427;
-		  background-image: -webkit-linear-gradient(top, #55585f, #47494f 66%, #3d3f44);
-		  background-image: -moz-linear-gradient(top, #55585f, #47494f 66%, #3d3f44);
-		  background-image: -o-linear-gradient(top, #55585f, #47494f 66%, #3d3f44);
-		  background-image: linear-gradient(to bottom, #55585f, #47494f 66%, #3d3f44);
-		}
-
-		.button-gray:active {
-		  background: #47494f;
-		  border-color: #232427 #2f3034 #2f3034;
-		}
-
-		.container {
-		  margin: 30px auto;
-		  width: 580px;
-		  text-align: center;
-		}
-
-		.container > .button { margin: 12px; }
-
-	</style>";
-
 		public NotificationManager notificationManager { get; set; }
 	}
 }
