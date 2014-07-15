@@ -60,14 +60,14 @@ namespace TestDot42
 			// 2-я часть
 			notif.SetLatestEventInfo(this, "HttpServer", message, pIntent);
 
-			if (!isNow)
+			if (isNow)
 			{
-				// ставим флаг, чтобы уведомление пропало после нажатия
-				notif.Flags = Notification.FLAG_AUTO_CANCEL;
+				notif.Flags = Notification.FLAG_NO_CLEAR;
 			}
 			else
 			{
-				notif.Flags = Notification.FLAG_FOREGROUND_SERVICE;
+				notificationManager.Cancel(1);
+				return;
 			}
 
 			// отправляем
@@ -139,9 +139,13 @@ namespace TestDot42
 								{
 									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PREVIOUS);
 								}
+								else if (line.IndexOf("GET /?play") == 0)
+								{
+									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PLAY);
+								}
 								else if (line.IndexOf("GET /?s") == 0)
 								{
-									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
+									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PAUSE);
 								}
 							}
 							if (line.IndexOf("favicon") > 0)
@@ -171,22 +175,36 @@ namespace TestDot42
 											<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
 											<div class='container'>
 													<h1 class='text-center'>AiSatanDevice Admin Panel: </h1>
+													
 													<div class='progress'>
-													  <div id='batteryStats' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + receiver.bStatus + @"' aria-valuemin='0' aria-valuemax='100' style='width: 40%'>
-														<span class='sr-only'>Battery: " + receiver.bStatus + @"%</span>
-													  </div>
+														<div id='batteryStats' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + receiver.bStatus + @"' aria-valuemin='0' aria-valuemax='100' style='width: " + receiver.bStatus + @"%'>
+															<span>Battery: " + receiver.bStatus + @"%</span>													  
+														</div>
 													</div>
 													<div class='text-center'>
 														<div class='btn-group'>
-															<a href='/?p45388' class='btn btn-warning'>Previous</a>
-															<a href='/?s45388' class='btn btn-success'>Play/Pause</a>
-															<a href='/?n45388' class='btn btn-primary'>Next</a>
+															<a href='/?p" + tmp + @"' class='btn btn-warning'>
+																<span class='glyphicon glyphicon-fast-backward'></span>
+																Previous
+															</a>
+															<a href='/?play" + tmp + @"' class='btn btn-success'>
+																<span class='glyphicon glyphicon-play'></span>
+																Play
+															</a>
+															<a href='/?s" + tmp + @"' class='btn btn-danger'>
+																<span class='glyphicon glyphicon glyphicon-pause'></span>
+																Pause
+															</a>
+															<a href='/?n" + tmp + @"' class='btn btn-primary'>
+																<span class='glyphicon glyphicon-fast-forward'></span>
+																Next
+															</a>
 														</div>
 													</div>
 											</div>
 										</body>
 										<script>
-$( document ).ready(function() {
+$(document).ready(function() {
 	if(" + receiver.bStatus + @" < 50)
 	{
 		$('#batteryStats').addClass('progress-bar-warning').removeClass('progress-bar-success');
