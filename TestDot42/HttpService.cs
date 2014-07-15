@@ -139,13 +139,13 @@ namespace TestDot42
 								{
 									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PREVIOUS);
 								}
-								else if (line.IndexOf("GET /?play") == 0)
+								else if (line.IndexOf("GET /?r") == 0)
 								{
-									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PLAY);
+									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
 								}
 								else if (line.IndexOf("GET /?s") == 0)
 								{
-									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_PAUSE);
+									imgs = ResTrack(intent, KeyEvent.KEYCODE_MEDIA_STOP);
 								}
 							}
 							if (line.IndexOf("favicon") > 0)
@@ -156,7 +156,15 @@ namespace TestDot42
 							if (line.Length == 0)
 								break;
 						}
-
+						var bColor = "#00FF00";
+						if(int.Parse(receiver.bStatus) < 50)
+						{
+							bColor = "#FFD600";
+						}
+						else if (int.Parse(receiver.bStatus) < 20)
+						{
+							bColor = "#FF0000";
+						}
 						var localUri = GetIPAddress() + ":" + PORT;
 						//ShowMessage(localUri);
 						//status.Text += "SimpleHttpServer: Sending response" + "\r\n";
@@ -187,18 +195,23 @@ namespace TestDot42
 																<span class='glyphicon glyphicon-fast-backward'></span>
 																Previous
 															</a>
-															<a href='/?play" + tmp + @"' class='btn btn-success'>
+															<a href='/?r" + tmp + @"' class='btn btn-success'>
 																<span class='glyphicon glyphicon-play'></span>
-																Play
+																Play/Pause
 															</a>
 															<a href='/?s" + tmp + @"' class='btn btn-danger'>
-																<span class='glyphicon glyphicon glyphicon-pause'></span>
-																Pause
+																<span class='glyphicon glyphicon glyphicon-stop'></span>
+																Stop
 															</a>
 															<a href='/?n" + tmp + @"' class='btn btn-primary'>
 																<span class='glyphicon glyphicon-fast-forward'></span>
 																Next
 															</a>
+														</div>
+													</div>
+													<div class='progress' style='width: 5%; background-color: #000000; height: 100px'>
+														<div id='batteryStats' style='background-color: " + bColor + @"; width:100%; height: " + (100-int.Parse(receiver.bStatus)) + @"%' class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + receiver.bStatus + @"' aria-valuemin='0' aria-valuemax='100'>
+															<span>Battery: " + receiver.bStatus + @"%</span>													  
 														</div>
 													</div>
 											</div>
