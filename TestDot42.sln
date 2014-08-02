@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDot42", "TestDot42\TestDot42.csproj", "{720F23F1-7562-4263-9A14-F8985C633017}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiSatanDevice", "TestDot42\AiSatanDevice.csproj", "{720F23F1-7562-4263-9A14-F8985C633017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

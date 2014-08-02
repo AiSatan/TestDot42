@@ -10,7 +10,7 @@ using Java.Io;
 using Java.Net;
 using Java.Util;
 using Org.Apache.Http.Conn.Util;
-using TestDot42;
+using AiSatanDevice;
 using Android.Content;
 using Android.View;
 
@@ -20,8 +20,9 @@ using Android.View;
 [assembly: UsesPermission(Android.Manifest.Permission.INTERNET)]
 [assembly: UsesPermission(Android.Manifest.Permission.ACCESS_NETWORK_STATE)]
 [assembly: UsesPermission(Android.Manifest.Permission.BATTERY_STATS)]
+[assembly: UsesPermission(Android.Manifest.Permission.MODIFY_AUDIO_SETTINGS)]
 
-namespace TestDot42
+namespace AiSatanDevice
 {
 	[Activity]
 	public class MainActivity : Activity
@@ -36,6 +37,9 @@ namespace TestDot42
 
 			var btnStop = (Button)FindViewById(R.Ids.Stop);
 			btnStop.Click += OnClickStop;
+
+			player = new AiPlayer();
+			player.Start();
 		}
 
 		private void OnClickStop(object sender, EventArgs e)
@@ -47,5 +51,7 @@ namespace TestDot42
 		{
 			StartService(new Intent(this, typeof(HttpService)));
 		}
+
+		internal AiPlayer player { get; set; }
 	}
 }

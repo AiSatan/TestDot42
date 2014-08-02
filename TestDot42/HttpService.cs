@@ -12,7 +12,7 @@ using Android.View;
 using Java.Util;
 using Org.Apache.Http.Conn.Util;
 
-namespace TestDot42
+namespace AiSatanDevice
 {
 	[Service]
 	public class HttpService : Service
